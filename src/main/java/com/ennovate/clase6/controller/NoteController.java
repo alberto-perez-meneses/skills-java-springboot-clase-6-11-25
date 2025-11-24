@@ -25,6 +25,11 @@ public class NoteController {
         return noteService.listAll();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Note> getNote(@PathVariable Long id) {
+        return noteService.get(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     public ResponseEntity<Note> create(@Valid @RequestBody NoteDto dto, @RequestParam String owner){
         return ResponseEntity.created(URI.create("/api/notes"))
